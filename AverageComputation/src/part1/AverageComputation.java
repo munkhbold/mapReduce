@@ -14,12 +14,8 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 
 public class AverageComputation {
-//	private static Logger logger = Logger.getLogger(TokenizerMapper.class);
-	
 	public static class TokenizerMapper extends Mapper<Object, Text, Text, PairWritable>{
 		private HashMap<String, PairWritable> buf;
-		
-		PairWritable pair = new PairWritable();
 
 		@Override
 		public void setup(Context context) {
@@ -42,11 +38,13 @@ public class AverageComputation {
 		    if(!isCorrect(ipAddress, v))
 		    	return;
 		
+		    PairWritable pair;
 		    if(buf.containsKey(ipAddress)) {
 		    	pair = buf.get(ipAddress);
 		    	pair.setKey(pair.getKey() + Integer.parseInt(v));
 		    	pair.setValue(pair.getValue() + 1);
 		    }else {
+		    	pair = new PairWritable();
 		    	pair.setKey(Integer.parseInt(v));
 		    	pair.setValue(1);
 		    }
