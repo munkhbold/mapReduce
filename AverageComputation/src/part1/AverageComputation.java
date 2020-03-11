@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -63,8 +64,8 @@ public class AverageComputation {
   }
 
   // Reducer class
-  public static class IntSumReducer extends Reducer<Text, PairWritable, Text, PairWritable> {
-    private PairWritable result = new PairWritable();
+  public static class IntSumReducer extends Reducer<Text, PairWritable, Text, FloatWritable> {
+    private FloatWritable result = new FloatWritable();
 
     public void reduce(Text key, Iterable<PairWritable> values, Context context ) throws IOException, InterruptedException{
       int sum = 0;
@@ -73,12 +74,23 @@ public class AverageComputation {
     	  qty += p.getValue();
     	  sum += p.getKey();
       }
-      result.setKey(sum);
-      result.setValue(qty);
-//      result.set((float) ((float)sum/(float)qty));
+//      result.setKey(sum);
+//      result.setValue(qty);
+      result.set((float) ((float)sum/(float)qty));
       context.write(key, result);
     }
   }
+  
+  public static class Combiner extends Reducer<Text, PairWritable, Text, PairWritable> {
+
+	    @Override
+	    protected void reduce(Text key, Iterable<PairWritable> values, Context context)
+	            throws IOException, InterruptedException {
+
+	        super.reduce(key, values, context);
+
+	    }
+	}
 
   public static void main(String[] args) throws Exception {
     Configuration conf = new Configuration();
@@ -87,18 +99,15 @@ public class AverageComputation {
     job.setJarByClass(AverageComputation.class);
     job.setMapperClass(TokenizerMapper.class);
 
-    job.setCombinerClass(IntSumReducer.class);
+    job.setCombinerClass(Combiner.class);
     job.setReducerClass(IntSumReducer.class);
     
-    job.setMapOutputKeyClass(Text.class);
+    job.setOutputKeyClass(Text.class);
+	job.setOutputValueClass(FloatWritable.class);
+
+	job.setMapOutputKeyClass(Text.class);
     job.setMapOutputValueClass(PairWritable.class);
     
-//    job.setOutputKeyClass(Text.class);
-//	job.setOutputValueClass(FloatWritable.class);
-//	
-//	job.setInputFormatClass(TextInputFormat.class);
-//	job.setOutputFormatClass(TextOutputFormat.class);
-
     FileInputFormat.addInputPath(job, new Path(args[0]));
     FileOutputFormat.setOutputPath(job, new Path(args[1]));
     System.exit(job.waitForCompletion(true) ? 0 : 1);
