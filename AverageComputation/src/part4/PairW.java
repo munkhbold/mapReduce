@@ -3,6 +3,7 @@ package part4;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.Objects;
 
 import org.apache.hadoop.io.WritableComparable;
 
@@ -10,6 +11,9 @@ import org.apache.hadoop.io.WritableComparable;
 public class PairW implements WritableComparable<PairW>{
 	private String key;
 	private String value;
+	
+	public PairW() {
+	}
 	
 	public PairW(String k, String v) {
 		key = k;
@@ -32,6 +36,11 @@ public class PairW implements WritableComparable<PairW>{
 		key = k;
 	}
 	
+	@Override
+	public int hashCode() {
+		return Objects.hash(key, value);
+//		return super.hashCode();
+	}
 
 	@Override
 	public void readFields(DataInput in) throws IOException {
@@ -47,6 +56,9 @@ public class PairW implements WritableComparable<PairW>{
 
 	@Override
 	public int compareTo(PairW o) {
-		return key.compareTo(o.getKey());
+		int k = key.compareTo(o.getKey());
+		if(k != 0)return k;
+		
+		return value.compareTo(o.getValue());
 	}
 }

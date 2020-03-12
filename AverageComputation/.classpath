@@ -3,8 +3,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="resources"/>
-	<classpathentry kind="lib" path="C:/Users/Admin/Downloads/hadoop-mapreduce-client-core-2.7.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Admin/Downloads/hadoop-common-2.7.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Admin/Downloads/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="/Users/munkhbold/Downloads/log4j.jar"/>
+	<classpathentry kind="lib" path="/Users/munkhbold/Downloads/hadoop-mapreduce-client-core-2.7.3.jar"/>
+	<classpathentry kind="lib" path="/Users/munkhbold/Downloads/hadoop-common-2.7.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

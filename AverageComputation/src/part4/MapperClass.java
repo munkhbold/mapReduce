@@ -8,12 +8,14 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 public class MapperClass extends Mapper<Object, Text, PairW, IntWritable>{
 	
+	PairW pair = new PairW();
+	IntWritable one = new IntWritable(1);
 	@Override
 	public void map(Object key, Text value, Context context) throws IOException, InterruptedException{
 	    String[] record = value.toString().split(" ");
 	    for(int i=0; i<record.length; i++) {
 	    	String s = record[i].trim();
-	    	
+
 	    	if(!s.matches("[A-Z]{1}\\d+"))
 	    		continue;
 
@@ -22,11 +24,12 @@ public class MapperClass extends Mapper<Object, Text, PairW, IntWritable>{
 
 	    		if(!s2.matches("[A-Z]{1}\\d+"))
 		    		continue;
-	    		else if( s == "" || s2 == "")
-	    			continue;
+
 	    		else if(s.equals(s2)) break;
 
-				context.write(new PairW(s, s2), new IntWritable(1));
+	    		pair.setKey(s);
+	    		pair.setValue(s2);
+				context.write(pair, one);
 	    	}
 	    }
 	}
