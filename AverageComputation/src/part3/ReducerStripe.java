@@ -11,7 +11,6 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 public class ReducerStripe extends Reducer<Text, MapWritable, Text, Text> {
 //    private MapWritable result = new MapWritable();
-    
 
     public void reduce(Text key, Iterable<MapWritable> values, Context context ) throws IOException, InterruptedException{
     	HashMap<String, Integer> stripe = new HashMap<>();
@@ -26,7 +25,7 @@ public class ReducerStripe extends Reducer<Text, MapWritable, Text, Text> {
     			stripe.put(s, b.get() + val);
     		}
     	}
-    	
+
     	int sum = 0;
     	for(int v: stripe.values())
     		sum += v;
