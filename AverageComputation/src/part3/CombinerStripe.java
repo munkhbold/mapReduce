@@ -1,7 +1,6 @@
 package part3;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.io.Text;
