@@ -6,7 +6,7 @@ import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-public class AverageReducer extends Reducer<Text, PairWritable, Text, FloatWritable> {
+public class ReducerClass extends Reducer<Text, PairWritable, Text, FloatWritable> {
     private FloatWritable result = new FloatWritable();
 
     public void reduce(Text key, Iterable<PairWritable> values, Context context ) throws IOException, InterruptedException{

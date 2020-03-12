@@ -6,7 +6,7 @@ import java.util.HashMap;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class AverageMapper extends Mapper<Object, Text, Text, PairWritable>{
+public class MapperClass extends Mapper<Object, Text, Text, PairWritable>{
 	private HashMap<String, PairWritable> buf;
 
 	@Override
@@ -23,7 +23,6 @@ public class AverageMapper extends Mapper<Object, Text, Text, PairWritable>{
 	@Override
 	public void map(Object key, Text value, Context context){
 	    String[] record = value.toString().split(" ");
-	
 	    String ipAddress = record[0];
 	    String v = record[record.length-1];
 	    
