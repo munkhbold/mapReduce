@@ -7,20 +7,21 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
+import part2.PairWritable;
 
-public class Framework {
+
+public class MapReduce {
   public static void main(String[] args) throws Exception {
 	    Configuration conf = new Configuration();
 	    Job job = Job.getInstance(conf, "Part4");
 	    
-	    job.setJarByClass(Framework.class);
+	    job.setJarByClass(MapReduce.class);
+	    
 	    job.setMapperClass(MapperClass.class);
-
-	    job.setReducerClass(ReducerClass.class);
-
-		job.setMapOutputKeyClass(PairW.class);
+	    job.setMapOutputKeyClass(PairWritable.class);
 	    job.setMapOutputValueClass(IntWritable.class);
 
+	    job.setReducerClass(ReducerClass.class);		
 	    job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(Text.class);
 
