@@ -8,15 +8,15 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 
-public class CrystalBall {
+public class MapReduce {
   public static void main(String[] args) throws Exception {
     Configuration conf = new Configuration();
     Job job = Job.getInstance(conf, "Crystal ball");
     
-    job.setJarByClass(CrystalBall.class);
+    job.setJarByClass(MapReduce.class);
     job.setMapperClass(MapperRelativeStripe.class);
 
-    job.setCombinerClass(CombinerStripe.class);
+//    job.setCombinerClass(CombinerStripe.class);
     job.setReducerClass(ReducerStripe.class);
     
     job.setOutputKeyClass(Text.class);
